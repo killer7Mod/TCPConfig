@@ -28,7 +28,7 @@ LogFace
 
 	private static boolean USE_IN_ALL;
 
-	private static BasicHeader[] CUSTOM_HEADER;
+	private static BasicHeader[] CUSTOM_HEADERS;
 
 	private static boolean LOG_ADV;
 
@@ -62,7 +62,6 @@ LogFace
 
 	public static void reload()
 	{
-		int i;
 		prefs.reload();
 		ENABLED_MODULE = prefs.getBoolean(Common.ENABLED_MODULE, false);
 		LOG_NET = prefs.getBoolean(Common.LOG_NET, false);
@@ -71,40 +70,39 @@ LogFace
 		USE_IN_HEADERGROUP = prefs.getBoolean(Common.USE_IN_HEADERGROUP, false);
 		USE_IN_WEBVIEW = prefs.getBoolean(Common.USE_IN_WEBVIEW, false);
 		USE_IN_ALL = prefs.getBoolean(Common.USE_IN_ALL, false); 
-		String str = prefs.getString(Common.CUSTOM_HEADER, "");
-		if (!TextUtils.isEmpty(str))
+		String headers = prefs.getString(Common.CUSTOM_HEADER, "");
+		if (!TextUtils.isEmpty(headers))
 		{
-			String[] ss = str.split("\n");
-			CUSTOM_HEADER = new BasicHeader[ss.length];
-			i = 0;
-			for (String tmp: ss)
+			String[] sheaders = headers.split("\n");
+			CUSTOM_HEADERS = new BasicHeader[sheaders.length];
+			int i = 0;
+			for (String tmp: sheaders)
 			{
 				String[] tmp2 = tmp.split(":", 2);
-				CUSTOM_HEADER[i] = new BasicHeader(tmp2[0].trim(), tmp2[1].trim());
+				if(!TextUtils.isEmpty(tmp2[0]) && !TextUtils.isEmpty(tmp2[1]))
+				CUSTOM_HEADERS[i] = new BasicHeader(tmp2[0].trim(), tmp2[1].trim());
 				i++;
 			}
 		}
 		else
 		{
-			CUSTOM_HEADER = null;
+			CUSTOM_HEADERS = null;
 		}
 		
 		String tmp = prefs.getString(Common.CUSTOM_REQUEST, null);
 		RequestMod.load(tmp);
 
-		String tmp2 = prefs.getString(Common.USE_IN_PORTS, null);
+		String usePorts = prefs.getString(Common.USE_IN_PORTS, null);
 		USE_IN_PORTS = new ArrayList<String>();
-		if (tmp2 != null && tmp2.length() > 0)
+		if (!TextUtils.isEmpty(usePorts))
 		{
-			String[] split = tmp2.split(";");
+			String[] split = usePorts.split(";");
 			for (String tmp3 : split)
 			{
 				USE_IN_PORTS.add(tmp3);
 			}
 
 		}
-
-
 	}
 
 	private static boolean PassCheck(String AppName)
@@ -156,11 +154,11 @@ LogFace
 							String port = String.valueOf(s.getPort());
 							log("Socket: " + ip + ":" + port);
 							log("Socket Host: " + host);
-							if (USE_IN_PORTS.contains("default") || USE_IN_PORTS.contains(port))
+							if (USE_IN_PORTS.isEmpty() || USE_IN_PORTS.contains("default") || USE_IN_PORTS.contains(port))
 							{
 								OutputModStream outputstream = new OutputModStream((OutputStream)param.getResult());
 								outputstream.setSocketParam(host, port, ip);
-								outputstream.setHeaders(CUSTOM_HEADER);
+								outputstream.setHeaders(CUSTOM_HEADERS);
 								outputstream.setFace(module.this);
 								param.setResult(outputstream);
 							}
@@ -185,7 +183,7 @@ LogFace
 							Class<HeaderGroup> classHeadGroup = HeaderGroup.class;
 							Field fieldHeaders = classHeadGroup.getDeclaredField("headers");
 							fieldHeaders.setAccessible(true);
-							ListMod lm = new ListMod(pkg, CUSTOM_HEADER);
+							ListMod lm = new ListMod(pkg, CUSTOM_HEADERS);
 							lm.setLog(module.this);
 							fieldHeaders.set(headgroup, lm);
 
@@ -224,16 +222,16 @@ LogFace
 							log("WebView Hooking..");
 							if (((String)param.args[0]).startsWith("http"))
 								log("URL: " + param.args[0]);
-							Object o = param.args[1];
-							if (o != null)
+							Object objMap = param.args[1];
+							if (objMap != null)
 							{
-								hm = (Map<String,String>)o;
+								hm = (Map<String,String>)objMap;
 							}
 							else
 							{
 								hm = new HashMap<String,String>();
 							}
-							for (BasicHeader bh : CUSTOM_HEADER)
+							for (BasicHeader bh : CUSTOM_HEADERS)
 							{
 								if (hm.containsKey(bh.getName()))
 								{
@@ -250,7 +248,7 @@ LogFace
 		}
 		catch (Throwable e)
 		{
-			log("Error" + e.toString());
+			log("Error: " + e.toString());
 		}
 
 	}
