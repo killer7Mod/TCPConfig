@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="enabled_module"
+            android:title="@string/enable_module" />
+		
+	<PreferenceCategory
+        android:key="app_settings"
+        android:title="@string/title_settings"
+		android:dependency="enabled_module">
+		
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="log_network"
+            android:title="@string/logging_network" />
+
+		<SwitchPreference
+            android:defaultValue="false"
+            android:key="log_advancer"
+            android:title="@string/adv_logging"
+			android:dependency="log_network"/>
+		
+		<SwitchPreference
+            android:defaultValue="true"
+            android:key="use_in_socket"
+            android:title="@string/enable_socket" />
+
+		<SwitchPreference
+            android:defaultValue="false"
+            android:key="use_in_headergroup"
+            android:title="@string/enable_apache" />
+
+		<SwitchPreference
+            android:defaultValue="false"
+            android:key="use_in_webview"
+            android:title="@string/enable_webview" />
+		
+		<SwitchPreference
+            android:defaultValue="false"
+            android:key="use_in_All"
+            android:title="@string/enable_all_apps" />
+
+        <MultiSelectListPreference
+            android:key="list_of_apps"
+            android:title="@string/enable_apps" />
+
+		<MultiSelectListPreference
+            android:key="list_of_apps2"
+            android:title="@string/desable_apps" />
+
+		<EditTextPreference
+            android:key="custom_header"
+            android:title="@string/custom_headers" />
+
+		<EditTextPreference
+            android:key="custom_request"
+			android:summary="@string/only_socket"
+            android:title="@string/custom_request"
+			android:dependency="use_in_socket"/>
+
+		<EditTextPreference
+            android:key="use_in_ports"
+			android:defaultValue="default"
+			android:summary="@string/only_socket"
+            android:title="@string/allowed_ports"
+			android:dependency="use_in_socket"/>
+		
+    </PreferenceCategory>
+
+</PreferenceScreen>

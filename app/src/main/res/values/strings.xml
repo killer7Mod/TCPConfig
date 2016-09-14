@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	
+    <string name="app_name">TCP Config</string>
+	<string name="enable_module">Enable TCP Settings</string>
+	<string name="title_settings">Settings TCP</string>
+	<string name="logging_network">Debug Log</string>
+	<string name="adv_logging">advanced debugging</string>
+	<string name="enable_socket">Enable in Socket</string>
+	<string name="enable_apache">Enable in Apache Network</string>
+	<string name="enable_webview">Enable in WebView</string>
+	<string name="enable_all_apps">Enable in All Apps</string>
+	<string name="enable_apps">Enable Apps</string>
+	<string name="desable_apps">Desable in Apps</string>
+	<string name="custom_headers">Custom Headers</string>
+	<string name="custom_request">Custom Request</string>
+	<string name="only_socket">Only socket option is enabled</string>
+	<string name="allowed_ports">Allowed ports</string>
+
+</resources>
