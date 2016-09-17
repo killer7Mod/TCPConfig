@@ -56,7 +56,6 @@ extends PreferenceActivity
 		custom_header = (EditTextPreference)findPreference(Common.CUSTOM_HEADER);
 		custom_request = (EditTextPreference)findPreference(Common.CUSTOM_REQUEST);
 		use_in_ports = (EditTextPreference)findPreference(Common.USE_IN_PORTS);
-		load2();
 		new LoadApps().execute();
 	}
 
@@ -76,23 +75,6 @@ extends PreferenceActivity
 			});
 		list_apps.setEnabled(!use_in_all.isChecked());
 		list_apps2.setEnabled(use_in_all.isChecked());
-	}
-
-
-
-	private void load2()
-	{
-		custom_header.setSummary(custom_header.getText());
-		
-		custom_header.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener(){
-				@Override
-				public boolean onPreferenceChange(Preference p1, Object p2)
-				{
-					p1.setSummary((String)p2);
-					return true;
-				}
-		});
-		
 	}
 
 	public class LoadApps extends AsyncTask<Void, Void, Void>

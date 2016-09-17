@@ -13,6 +13,7 @@
 	<string name="enable_apps">Enable Apps</string>
 	<string name="desable_apps">Desable in Apps</string>
 	<string name="custom_headers">Custom Headers</string>
+	<string name="cheaders_summary">Example:\nHost: www.example.com\nUser-Agent: Android</string>
 	<string name="custom_request">Custom Request</string>
 	<string name="only_socket">Only socket option is enabled</string>
 	<string name="allowed_ports">Allowed ports</string>

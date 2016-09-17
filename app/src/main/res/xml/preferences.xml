@@ -53,10 +53,12 @@
 
 		<EditTextPreference
             android:key="custom_header"
-            android:title="@string/custom_headers" />
+            android:title="@string/custom_headers"
+			android:summary="@string/cheaders_summary"/>
 
 		<EditTextPreference
             android:key="custom_request"
+			android:defaultValue="METHOD: GET>GET\nPROTOCOL: DEFAULT\nURL: PROTOCOL;HOST;PORT;PATH"
 			android:summary="@string/only_socket"
             android:title="@string/custom_request"
 			android:dependency="use_in_socket"/>

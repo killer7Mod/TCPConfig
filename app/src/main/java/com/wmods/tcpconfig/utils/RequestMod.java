@@ -38,7 +38,7 @@ public class RequestMod
 						tcp.setMethod(str[1].trim().toUpperCase());
 				}
 			}
-			if (s.contains("PROTOCOL") && (val = h.get(s)) != null)
+			if (s.contains("PROTOCOL") && (val = h.get(s)) != null && !val.equals("DEFAULT"))
 			{
 				tcp.setProtocol(val);
 			}
@@ -48,32 +48,32 @@ public class RequestMod
 				if (vals.length == 4)
 				{
 					URLControl URL = new URLControl(tcp.getURL());
-					if (!vals[0].equals("DEFAULT"))
+					if (!vals[0].equals("PROTOCOL"))
 					{
 						String tmp = URL.getProtocol();
-					    vals[0] = vals[0].replace("fromURL", tmp != null ? tmp : "");
+					    vals[0] = vals[0].replace("PROTOCOL", tmp != null ? tmp : "");
 						URL.setProtocol(vals[0]);
 					}
 					
-					if (!vals[1].equals("DEFAULT"))
+					if (!vals[1].equals("HOST"))
 					{
 						String tmp = URL.getHost();
-					    vals[1] = vals[1].replace("fromURL", tmp != null ? tmp : (param[0] != null ? param[0] : ""));
-						vals[1] = vals[1].replace("fromURL2", param[2] != null ? param[2] : "");
+					    vals[1] = vals[1].replace("HOST", tmp != null ? tmp : (param[0] != null ? param[0] : ""));
+						vals[1] = vals[1].replace("HOST2", param[2] != null ? param[2] : "");
 						URL.setHost(vals[1]);
 					}
 					
-					if (!vals[2].equals("DEFAULT"))
+					if (!vals[2].equals("PORT"))
 					{
 						String tmp = URL.getPort();
-					    vals[2] = vals[2].replace("fromURL", tmp != null ? tmp : (param[1].length() > 1 ? param[1] : ""));
+					    vals[2] = vals[2].replace("PORT", tmp != null ? tmp : (param[1].length() > 1 ? param[1] : ""));
 						URL.setPort(vals[2]);
 					}
 					
-					if (!vals[3].equals("DEFAULT"))
+					if (!vals[3].equals("PATH"))
 					{
 						String tmp = URL.getPath();
-					    vals[3] = vals[3].replace("fromURL", tmp != null ? tmp : "");
+					    vals[3] = vals[3].replace("PATH", tmp != null ? tmp : "");
 						URL.setPath(vals[3]);
 					}
 					tcp.setURL(URL.getString());
